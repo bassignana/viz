@@ -19,7 +19,6 @@ import React from 'react';
 import _ from 'lodash';
 
 import { storiesOf } from '@storybook/react';
-import { WithNotes } from '@storybook/addon-notes';
 
 import { createPrintView } from '../../src/modules/print/index';
 import { MARGIN } from '../../src/modules/print/utils/constants';
@@ -90,7 +89,6 @@ profiles.longName.profile.fullName = 'Super Duper Long Patient Name';
 
 storiesOf('Basics View PDF', module)
   .add(`cannula prime (${MGDL_UNITS})`, () => (
-    <WithNotes notes={notes}>
       <button
         onClick={() => openPDF({ patient: {
           ...profiles.standard,
@@ -99,11 +97,9 @@ storiesOf('Basics View PDF', module)
       >
         Open PDF in new tab
       </button>
-    </WithNotes>
-  ))
+  ), { notes })
 
   .add(`tubing prime (${MMOLL_UNITS})`, () => (
-    <WithNotes notes={notes}>
       <button
         onClick={() => openPDF({
           patient: {
@@ -115,11 +111,9 @@ storiesOf('Basics View PDF', module)
       >
         Open PDF in new tab
       </button>
-    </WithNotes>
-  ))
+  ), { notes })
 
   .add(`reservoir change (${MGDL_UNITS})`, () => (
-    <WithNotes notes={notes}>
       <button
         onClick={() => openPDF({
           patient: {
@@ -131,11 +125,9 @@ storiesOf('Basics View PDF', module)
       >
         Open PDF in new tab
       </button>
-    </WithNotes>
-  ))
+  ), { notes })
 
   .add(`site change source undefined (${MMOLL_UNITS})`, () => (
-    <WithNotes notes={notes}>
       <button
         onClick={() => openPDF({
           patient: {
@@ -147,5 +139,4 @@ storiesOf('Basics View PDF', module)
       >
         Open PDF in new tab
       </button>
-    </WithNotes>
-  ));
+  )), { notes };

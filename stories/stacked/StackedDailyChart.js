@@ -19,7 +19,7 @@ import React from 'react';
 import _ from 'lodash';
 
 import { storiesOf } from '@storybook/react';
-import { WithNotes } from '@storybook/addon-notes';
+
 
 import * as profiles from '../../data/patient/profiles';
 import { data as dataStub } from '../../data/patient/data';
@@ -51,19 +51,15 @@ const bgBounds = {
 
 const notes = '';
 
-storiesOf('Daily View PDF', module)
+storiesOf('Stacked Daily View PDF', module)
   .add(`standard account (${MGDL_UNITS})`, () => (
-    <WithNotes notes={notes}>
-      <button onClick={() => {}}>
-        Open PDF in new tab
-      </button>
-    </WithNotes>
+    <button onClick={() => {}}>
+      Open PDF in new tab
+    </button>
   ))
 
   .add(`standard account (${MMOLL_UNITS})`, () => (
-    <WithNotes notes={notes}>
-      <button onClick={() => {}}>
-        Open PDF in new tab
-      </button>
-    </WithNotes>
+    <button onClick={() => {}}>
+      Open PDF in new tab
+    </button>
   ));

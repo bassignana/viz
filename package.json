@@ -38,9 +38,8 @@
   },
   "homepage": "https://github.com/tidepool-org/viz#readme",
   "devDependencies": {
-    "@storybook/addon-notes": "^3.4.8",
-    "@storybook/addons": "^3.4.8",
-    "@storybook/react": "v4.0.0-alpha.3",
+    "@storybook/addon-notes": "4.0.0-alpha.3",
+    "@storybook/react": "4.0.0-alpha.3",
     "@webpack-cli/migrate": "^0.0.8",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",

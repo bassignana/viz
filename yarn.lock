@@ -133,12 +133,13 @@
   dependencies:
     samsam "1.3.0"
 
-"@storybook/addon-notes@^3.4.8":
-  version "3.4.8"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-notes/-/addon-notes-3.4.8.tgz#059be3d1010e6278730867d9e45b047713ccb5b9"
+"@storybook/addon-notes@4.0.0-alpha.3":
+  version "4.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-notes/-/addon-notes-4.0.0-alpha.3.tgz#ad252455abc08ed0a2976b6310db07beb54d7520"
   dependencies:
+    "@storybook/addons" "4.0.0-alpha.3"
     babel-runtime "^6.26.0"
-    marked "^0.3.17"
+    marked "^0.3.19"
     prop-types "^15.6.1"
     util-deprecate "^1.0.2"
 
@@ -148,10 +149,6 @@
   dependencies:
     "@storybook/channels" "4.0.0-alpha.3"
     global "^4.3.2"
-
-"@storybook/addons@^3.4.8":
-  version "3.4.8"
-  resolved "https://registry.yarnpkg.com/@storybook/addons/-/addons-3.4.8.tgz#ff1142d8f0963dd28b7c6f88dc9d3be170ac6600"
 
 "@storybook/channel-postmessage@4.0.0-alpha.3":
   version "4.0.0-alpha.3"
@@ -286,7 +283,7 @@
   dependencies:
     babel-runtime "^6.5.0"
 
-"@storybook/react@v4.0.0-alpha.3":
+"@storybook/react@4.0.0-alpha.3":
   version "4.0.0-alpha.3"
   resolved "https://registry.yarnpkg.com/@storybook/react/-/react-4.0.0-alpha.3.tgz#3a8dacbefd39b171c0bc2ebc42b730fde53ec0c4"
   dependencies:
@@ -7710,7 +7707,7 @@ markdown-loader@^2.0.2:
     loader-utils "^1.1.0"
     marked "^0.3.9"
 
-marked@^0.3.16, marked@^0.3.17, marked@^0.3.9, marked@~0.3.6:
+marked@^0.3.16, marked@^0.3.19, marked@^0.3.9, marked@~0.3.6:
   version "0.3.19"
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.19.tgz#5d47f709c4c9fc3c216b6d46127280f40b39d790"
 

@@ -19,7 +19,6 @@ import React from 'react';
 import _ from 'lodash';
 
 import { storiesOf } from '@storybook/react';
-import { WithNotes } from '@storybook/addon-notes';
 
 import { createPrintView } from '../../src/modules/print/index';
 import { MARGIN } from '../../src/modules/print/utils/constants';
@@ -92,17 +91,13 @@ profiles.longName.profile.fullName = 'Super Duper Long Patient Name';
 
 storiesOf('Daily View PDF', module)
   .add(`standard account (${MGDL_UNITS})`, () => (
-    <WithNotes notes={notes}>
-      <button onClick={() => openPDF({ patient: profiles.standard })}>
-        Open PDF in new tab
-      </button>
-    </WithNotes>
-  ))
+    <button onClick={() => openPDF({ patient: profiles.standard })}>
+      Open PDF in new tab
+    </button>
+  ), { notes })
 
   .add(`standard account (${MMOLL_UNITS})`, () => (
-    <WithNotes notes={notes}>
-      <button onClick={() => openPDF({ patient: profiles.standard, bgUnits: MMOLL_UNITS })}>
-        Open PDF in new tab
-      </button>
-    </WithNotes>
-  ));
+    <button onClick={() => openPDF({ patient: profiles.standard, bgUnits: MMOLL_UNITS })}>
+      Open PDF in new tab
+    </button>
+  ), { notes });

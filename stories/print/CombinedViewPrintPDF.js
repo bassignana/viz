@@ -19,7 +19,6 @@ import React from 'react';
 import _ from 'lodash';
 
 import { storiesOf } from '@storybook/react';
-import { WithNotes } from '@storybook/addon-notes';
 
 import { createPrintView } from '../../src/modules/print/index';
 import { MARGIN } from '../../src/modules/print/utils/constants';
@@ -96,7 +95,6 @@ profiles.longName.profile.fullName = 'Super Duper Long Patient Name';
 
 storiesOf('Combined Views PDF', module)
   .add(`standard account (${MGDL_UNITS})`, () => (
-    <WithNotes notes={notes}>
       <button
         onClick={() => openPDF({ patient: {
           ...profiles.standard,
@@ -105,11 +103,9 @@ storiesOf('Combined Views PDF', module)
       >
         Open PDF in new tab
       </button>
-    </WithNotes>
-  ))
+  ), { notes })
 
   .add(`standard account (${MMOLL_UNITS})`, () => (
-    <WithNotes notes={notes}>
       <button
         onClick={() => openPDF({
           patient: {
@@ -121,11 +117,9 @@ storiesOf('Combined Views PDF', module)
       >
         Open PDF in new tab
       </button>
-    </WithNotes>
-  ))
+  ), { notes })
 
   .add('fake child account', () => (
-    <WithNotes notes={notes}>
       <button
         onClick={() => openPDF({ patient: {
           ...profiles.fakeChildAcct,
@@ -134,11 +128,9 @@ storiesOf('Combined Views PDF', module)
       >
         Open PDF in new tab
       </button>
-    </WithNotes>
-  ))
+  ), { notes })
 
   .add('long patient name', () => (
-    <WithNotes notes={notes}>
       <button
         onClick={() => openPDF({ patient: {
           ...profiles.longName,
@@ -147,5 +139,4 @@ storiesOf('Combined Views PDF', module)
       >
         Open PDF in new tab
       </button>
-    </WithNotes>
-  ));
+  ), { notes });

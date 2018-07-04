@@ -19,7 +19,6 @@ import React from 'react';
 import { scaleLinear } from 'd3-scale';
 
 import { storiesOf } from '@storybook/react';
-import { WithNotes } from '@storybook/addon-notes';
 
 import Bolus from '../../../../src/components/common/data/Bolus';
 
