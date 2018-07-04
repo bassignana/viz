@@ -18,8 +18,8 @@
 import React from 'react';
 import _ from 'lodash';
 
-import { storiesOf } from '@kadira/storybook';
-import { WithNotes } from '@kadira/storybook-addon-notes';
+import { storiesOf } from '@storybook/react';
+import { WithNotes } from '@storybook/addon-notes';
 
 import * as profiles from '../../data/patient/profiles';
 import { data as dataStub } from '../../data/patient/data';

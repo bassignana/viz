@@ -16,7 +16,7 @@
  */
 
 import _ from 'lodash';
-import React, { PropTypes } from 'react';
+import React from 'react'; import PropTypes from 'prop-types';
 
 import { calculateBasalPath, getBasalSequencePaths } from '../../../modules/render/basal';
 import { getBasalSequences, getBasalPathGroups, getBasalPathGroupType } from '../../../utils/basal';

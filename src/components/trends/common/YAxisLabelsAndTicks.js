@@ -16,7 +16,7 @@
  */
 
 import _ from 'lodash';
-import React, { PropTypes } from 'react';
+import React from 'react'; import PropTypes from 'prop-types';
 
 import { MGDL_UNITS, MMOLL_UNITS } from '../../../utils/constants';
 import { formatBgValue } from '../../../utils/format';
