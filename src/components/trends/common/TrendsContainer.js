@@ -1,3 +1,10 @@
+import _ from 'lodash';
+import bows from 'bows';
+import { extent } from 'd3-array';
+import { scaleLinear } from 'd3-scale';
+import { utcDay } from 'd3-time';
+import moment from 'moment-timezone';
+
 /*
  * == BSD2 LICENSE ==
  * Copyright (c) 2016, Tidepool Project
@@ -15,13 +22,9 @@
  * == BSD2 LICENSE ==
  */
 
-import _ from 'lodash';
-import bows from 'bows';
-import { extent } from 'd3-array';
-import { scaleLinear } from 'd3-scale';
-import { utcDay } from 'd3-time';
-import moment from 'moment-timezone';
-import React, { PropTypes, PureComponent } from 'react';
+import PropTypes from 'prop-types';
+
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -135,7 +138,7 @@ export class TrendsContainer extends PureComponent {
     smbgLines: PropTypes.bool.isRequired,
     timePrefs: PropTypes.shape({
       timezoneAware: PropTypes.bool.isRequired,
-      timezoneName: React.PropTypes.oneOfType([React.PropTypes.string, null]),
+      timezoneName: PropTypes.oneOfType([PropTypes.string, null]),
     }).isRequired,
     yScaleClampTop: PropTypes.shape({
       [MGDL_UNITS]: PropTypes.number.isRequired,

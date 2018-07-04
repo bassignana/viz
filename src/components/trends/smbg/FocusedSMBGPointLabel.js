@@ -146,11 +146,11 @@ FocusedSMBGPointLabel.propTypes = {
       left: PropTypes.number.isRequired,
     }),
   }),
-  grouped: React.PropTypes.bool.isRequired,
-  lines: React.PropTypes.bool.isRequired,
+  grouped: PropTypes.bool.isRequired,
+  lines: PropTypes.bool.isRequired,
   timePrefs: PropTypes.shape({
-    timezoneAware: React.PropTypes.bool.isRequired,
-    timezoneName: React.PropTypes.oneOfType([React.PropTypes.string, null]),
+    timezoneAware: PropTypes.bool.isRequired,
+    timezoneName: PropTypes.oneOfType([PropTypes.string, null]),
   }).isRequired,
 };
 

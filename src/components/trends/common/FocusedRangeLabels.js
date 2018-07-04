@@ -198,8 +198,8 @@ FocusedRangeLabels.propTypes = {
     top: PropTypes.number.isRequired,
   }).isRequired,
   timePrefs: PropTypes.shape({
-    timezoneAware: React.PropTypes.bool.isRequired,
-    timezoneName: React.PropTypes.oneOfType([React.PropTypes.string, null]),
+    timezoneAware: PropTypes.bool.isRequired,
+    timezoneName: PropTypes.oneOfType([PropTypes.string, null]),
   }).isRequired,
 };
 
