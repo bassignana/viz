@@ -7,6 +7,7 @@ import { SafeAreaView, Platform, StatusBar, View } from "react-native";
 
 import Fonts from "../../src/constants/Fonts";
 import withThemeProvider from "../../src/enhancers/withThemeProvider";
+import withExpoFontPreload from "../../src/enhancers/withExpoFontPreload";
 import reducers from "../../src/reducers";
 import PrimaryTheme from "../../src/themes/PrimaryTheme";
 
@@ -20,6 +21,8 @@ class StoryContainerComponent extends PureComponent {
     const paddingTop = Platform.OS === "android" ? StatusBar.currentHeight : 0;
 
     const enhanced = withThemeProvider(
+
+      withExpoFontPreload(() => children, Fonts),
       PrimaryTheme
     );
 

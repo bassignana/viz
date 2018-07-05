@@ -26,7 +26,7 @@ class GraphNoteEventSvg {
         d={verticalLinePathDescription}
         stroke="black"
         strokeLinecap="square"
-        strokeLineJoin="round"
+        strokeLinejoin="round"
         strokeWidth="1.5"
       />,
       <Polygon

@@ -1,18 +1,13 @@
-const format = require('util').format;
 const path = require('path');
 const webpack = require('webpack');
 
-const appDirectory = path.resolve(__dirname)
+const appDirectory = path.resolve(__dirname);
 
-const __DEV__ = process.env.NODE_ENV === 'development'
-
-const localIdentName = process.env.NODE_ENV === 'test' ?
-  // Enzyme as of v2.4.1 has trouble with classes
-  // that do not start and *end* with an alpha character
-  // but that will sometimes happen with the base64 hashes
-  // so we leave them off in the test env
-  '[name]--[local]' :
-  '[name]--[local]--[hash:base64:5]';
+// Enzyme as of v2.4.1 has trouble with classes
+// that do not start and *end* with an alpha character
+// but that will sometimes happen with the base64 hashes
+// so we leave them off in the test env
+const localIdentName = process.env.NODE_ENV === 'test' ? '[name]--[local]' : '[name]--[local]--[hash:base64:5]';
 
 // This is needed for webpack to compile JavaScript.
 // Many OSS React Native packages are not compiled to ES5 before being
@@ -40,7 +35,15 @@ const babelLoaderConfiguration = {
       cacheDirectory: true,
       // This aliases 'react-native' to 'react-native-web' and includes only
       // the modules needed by the app
-      plugins: ['react-native-web'],
+      plugins: [
+        ['transform-runtime', {
+          helpers: false,
+          polyfill: false,
+          regenerator: true,
+          moduleName: 'babel-runtime',
+        }],
+        'react-native-web',
+      ],
       // The 'react-native' preset is recommended (or use your own .babelrc)
       presets: ['react-native'],
     },
@@ -51,7 +54,7 @@ const babelLoaderConfiguration = {
 const imageLoaderConfiguration = {
   test: /\.(gif|jpe?g|png|svg)$/,
   use: {
-    loader: 'url-loader',
+    loader: 'react-native-web-image-loader',
     options: {
       name: '[name].[ext]',
     },
@@ -59,15 +62,7 @@ const imageLoaderConfiguration = {
 };
 
 module.exports = {
-  // node: { fs: 'empty' },
   plugins: [
-    // `process.env.NODE_ENV === 'production'` must be `true` for production
-    // builds to eliminate development checks and reduce build size. You may
-    // wish to include additional optimizations.
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-      __DEV__,
-    }),
     new webpack.LoaderOptionsPlugin({
       debug: true,
     }),
@@ -88,14 +83,15 @@ module.exports = {
     ],
     alias: {
       'react-native$': 'react-native-web',
-      'fs': 'fs-web',
+      fs: 'browserify-fs',
+
       // Needed to allow glamorous-native to compile
       'react-native/Libraries/Components/View/ViewStylePropTypes$': 'react-native-web/dist/exports/View/ViewStylePropTypes',
       'react-native/Libraries/Text/TextStylePropTypes$': 'react-native-web/dist/exports/Text/TextStylePropTypes',
-      // Needed to allow expo to compile
-      // 'react-native/Libraries/Image/resolveAssetSource$': 'react-native/Libraries/Image/resolveAssetSource',
-      // 'AssetRegistry$': 'react-native/Libraries/Image/AssetRegistry',
-      // 'AssetSourceResolver$': 'react-native/Libraries/Image/AssetSourceResolver',
+
+      // Needed to allow expo to compile -- react-native-web is missing resolveAssetSource,
+      // so we need to replace it with a noop
+      'react-native/Libraries/Image/resolveAssetSource$': path.join(__dirname, '/src/vendorOverrides/resolveAssetSource'),
     },
   },
   module: {
@@ -107,44 +103,28 @@ module.exports = {
           {
             loader: 'css-loader?sourceMap',
             query: {
-                modules: true,
-                importLoaders: 1,
-                localIdentName: localIdentName
+              modules: true,
+              importLoaders: 1,
+              localIdentName,
             },
           },
           'postcss-loader?sourceMap',
         ],
       },
-      // {
-      //   test: /\.js$/,
-      //   exclude: path.join(__dirname, 'node_modules'),
-      //   use: [
-      //     {
-      //       loader: 'babel-loader',
-      //     },
-      //   ],
-      // },
-      // {
-      //   test: /\.png$/,
-      //   use: [
-      //     'react-native-web-image-loader?name=[hash].[ext]',
-      //   ],
-      // },
       babelLoaderConfiguration,
       imageLoaderConfiguration,
       {
         test: /\.ttf$/,
-        loader: 'url-loader',
-        include: path.resolve(__dirname, '../node_modules/react-native-vector-icons'),
-      },
-      {
-        test: /\.ttf$/,
         use: [
           {
-            loader: 'url-loader?limit=25000&mimetype=application/octet-stream',
+            loader: 'url-loader',
+            query: {
+              limit: 25000,
+              mimetype: 'application/octet-stream',
+            },
           },
         ],
       },
-    ]
+    ],
   },
 };

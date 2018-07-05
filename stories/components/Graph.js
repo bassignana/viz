@@ -63,7 +63,8 @@ const stories = storiesOf("Graph", module);
 stories.addDecorator(withKnobs);
 const rendererLabel = "Renderer";
 const rendererOptions = [GRAPH_RENDERER_THREE_JS, GRAPH_RENDERER_SVG];
-const defaultRenderer = GRAPH_RENDERER_THREE_JS;
+// const defaultRenderer = GRAPH_RENDERER_THREE_JS;
+const defaultRenderer = GRAPH_RENDERER_SVG;
 
 const props = {
   isLoading,

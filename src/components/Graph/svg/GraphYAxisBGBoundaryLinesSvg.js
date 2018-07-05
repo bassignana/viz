@@ -30,7 +30,7 @@ class GraphYAxisBGBoundaryLinesSvg extends PureComponent {
         stroke={theme.graphLineStrokeColor}
         strokeDasharray="2, 5"
         strokeLinecap="square"
-        strokeLineJoin="round"
+        strokeLinejoin="round"
         strokeWidth="1.5"
       />
     );
