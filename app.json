@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "Tidepool Viz",
+    "slug": "viz",
+    "sdkVersion": "UNVERSIONED",
+    "privacy": "public",
+    "platforms": ["ios", "android", "web"],
+    "updates": {
+      "enabled": false
+    },
+    "isDetached": true,
+    "assetBundlePatterns": ["**/fonts/*", "**/images/*"]
+  }
+}
