@@ -1,24 +1,21 @@
-import React, { PureComponent } from 'react';
-import { StyleSheet } from 'react-native';
-import PropTypes from 'prop-types';
-import glamorous, { withTheme } from 'glamorous'; // TODO: need to pass this in as prop
-// import glamorous, { withTheme } from 'glamorous-native'; // TODO: need to pass this in as prop
+import React, { PureComponent } from "react";
+import { StyleSheet } from "react-native";
+import PropTypes from "prop-types";
+import glamorous, { withTheme } from "glamorous-native";
 
-import { ThemePropType } from '../prop-types/theme';
-import { GRAPH_RENDERER_SVG } from './helpers';
-import GraphFixedLayoutInfo from './GraphFixedLayoutInfo';
-import GraphScalableLayoutInfo from './GraphScalableLayoutInfo';
-import GraphYAxisLabels from './GraphYAxisLabels';
-import GraphYAxisBGBoundaryLinesSvg from './svg/GraphYAxisBGBoundaryLinesSvg';
-import GraphNoData from './GraphNoData';
-import GraphScrollable from './GraphScrollable';
-import GraphZoomable from './GraphZoomable';
+import { ThemePropType } from "../../prop-types/theme";
+import { GRAPH_RENDERER_SVG } from "./helpers";
+import GraphFixedLayoutInfo from "./GraphFixedLayoutInfo";
+import GraphScalableLayoutInfo from "./GraphScalableLayoutInfo";
+import GraphYAxisLabels from "./GraphYAxisLabels";
+import GraphYAxisBGBoundaryLinesSvg from "./svg/GraphYAxisBGBoundaryLinesSvg";
+import GraphNoData from "./GraphNoData";
+import GraphScrollable from "./GraphScrollable";
+import GraphZoomable from "./GraphZoomable";
 
 class Graph extends PureComponent {
   constructor(props) {
     super(props);
-
-    this.glamorous = props.glamorous;
 
     const { scale, eventTime } = props;
     const graphFixedLayoutInfo = new GraphFixedLayoutInfo({});
@@ -120,7 +117,7 @@ class Graph extends PureComponent {
         <glamorous.Image
           width={248}
           height={155}
-          source={require('../assets/images/jump-jump-jump-jump.gif')}
+          source={require("../../../assets/images/jump-jump-jump-jump.gif")}
         />
       </glamorous.View>
     );
@@ -259,7 +256,5 @@ Graph.defaultProps = {
   onZoomStart: null,
   onZoomEnd: null,
 };
-
-export const ThemedGraph = (themeHOC) => themeHOC(Graph);
 
 export default withTheme(Graph);

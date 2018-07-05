@@ -39,13 +39,8 @@ module.exports = {
       {
         test: /\.(css)$/,
         use: [
-          // ExtractTextPlugin.extract({
-          //     fallbackLoader: "style/useable",
-          //     loader: "style-loader"
-          // }),
           'style-loader',
           {
-            // loader: format('style-loader!css-loader?%s&%s!postcss-loader', importLoaders, cssModules),
             loader: 'css-loader?sourceMap',
             query: {
                 modules: true,
@@ -65,42 +60,20 @@ module.exports = {
           }
         ]
       },
-      // {
-      //   test: /\.json$/,
-      //   use: [
-      //     {
-      //     loader: 'json-loader',
-      //     }
-      //   ]
-      // },
       {
         test: /\.png$/,
         use: [
+          'react-native-web-image-loader?name=[hash].[ext]',
+        ]
+      },
+      {
+        test: /\.ttf$/,
+        use: [
           {
             loader: 'url-loader?limit=25000&mimetype=image/png',
-          }
+          },
         ]
       },
     ]
-    // loaders: [
-    //   {
-    //     test: /\.css$/,
-    //     loader: format('style-loader!css-loader?%s&%s!postcss-loader', importLoaders, cssModules),
-    //   },
-    //   {
-    //     test: /\.js$/,
-    //     exclude: path.join(__dirname, 'node_modules'),
-    //     loader: 'babel-loader',
-    //   },
-    //   {
-    //     test: /\.json$/,
-    //     loader: 'json-loader',
-    //   },
-    //   {
-    //     test: /\.png$/,
-    //     loader: 'url-loader?limit=25000&mimetype=image/png',
-    //   },
-    // ],
-    // postcss: [calc, cssVariables],
   },
 };
