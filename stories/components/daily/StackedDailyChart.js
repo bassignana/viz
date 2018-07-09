@@ -21,15 +21,15 @@ import _ from 'lodash';
 import { storiesOf } from '@storybook/react';
 
 
-import * as profiles from '../../data/patient/profiles';
-import { data as dataStub } from '../../data/patient/data';
+import * as profiles from '../../../data/patient/profiles';
+import { data as dataStub } from '../../../data/patient/data';
 
-import { MGDL_UNITS, MMOLL_UNITS } from '../../src/utils/constants';
+import { MGDL_UNITS, MMOLL_UNITS } from '../../../src/utils/constants';
 
 let data;
 try {
   // eslint-disable-next-line global-require, import/no-unresolved
-  data = require('../../local/print-view.json');
+  data = require('../../../local/print-view.json');
 } catch (e) {
   data = dataStub;
 }
@@ -51,14 +51,8 @@ const bgBounds = {
 
 const notes = '';
 
-storiesOf('Stacked Daily View PDF', module)
+storiesOf('Stacked Daily Graph', module)
   .add(`standard account (${MGDL_UNITS})`, () => (
-    <button onClick={() => {}}>
-      Open PDF in new tab
-    </button>
-  ))
-
-  .add(`standard account (${MMOLL_UNITS})`, () => (
     <button onClick={() => {}}>
       Open PDF in new tab
     </button>

@@ -3,6 +3,7 @@ const webpack = require('webpack');
 
 const appDirectory = path.resolve(__dirname);
 
+// eslint-disable-next-line no-underscore-dangle
 const __DEV__ = process.env.NODE_ENV === 'development';
 
 // Enzyme as of v2.4.1 has trouble with classes
