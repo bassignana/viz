@@ -198,6 +198,7 @@ class Graph extends PureComponent {
       smbgData,
       basalData,
       maxBasalValue,
+      renderNoteEvents,
     } = this.props;
     const { graphScalableLayoutInfo, isZooming } = this.state;
 
@@ -213,6 +214,7 @@ class Graph extends PureComponent {
         smbgData={smbgData}
         basalData={basalData}
         maxBasalValue={maxBasalValue}
+        renderNoteEvents={renderNoteEvents}
       />
     );
   }
@@ -239,6 +241,7 @@ Graph.propTypes = {
   basalData: PropTypes.arrayOf(PropTypes.object.isRequired),
   maxBasalValue: PropTypes.number,
   scale: PropTypes.number,
+  renderNoteEvents: PropTypes.bool,
   eventTime: PropTypes.instanceOf(Date),
   navigateHowToUpload: PropTypes.func.isRequired,
   graphRenderer: PropTypes.string.isRequired,
@@ -255,6 +258,7 @@ Graph.defaultProps = {
   maxBasalValue: 1.0,
   onZoomStart: null,
   onZoomEnd: null,
+  renderNoteEvents: true,
 };
 
 export default withTheme(Graph);

@@ -49,7 +49,7 @@ export class StackedDailyGraph extends PureComponent {
       }).isRequired,
       bgUnits: PropTypes.oneOf([MGDL_UNITS, MMOLL_UNITS]).isRequired,
     }).isRequired,
-    currentPatientInViewId: PropTypes.string.isRequired,
+    // currentPatientInViewId: PropTypes.string.isRequired,
     extentSize: PropTypes.oneOf([ONE_WEEK, TWO_WEEKS, FOUR_WEEKS]).isRequired,
     initialDatetimeLocation: PropTypes.string.isRequired,
     loading: PropTypes.bool.isRequired,
@@ -58,10 +58,10 @@ export class StackedDailyGraph extends PureComponent {
       timezoneName: PropTypes.oneOfType([PropTypes.string, null]),
     }).isRequired,
     // data (crossfilter dimensions)
-    cbgByDate: PropTypes.object.isRequired,
-    smbgByDate: PropTypes.object.isRequired,
-    basalByDate: PropTypes.object.isRequired,
-    bolusByDate: PropTypes.object.isRequired,
+    smbgData: PropTypes.object.isRequired,
+    cbgData: PropTypes.object.isRequired,
+    bolusData: PropTypes.object.isRequired,
+    basalData: PropTypes.object.isRequired,
     // handlers
     onDatetimeLocationChange: PropTypes.func.isRequired,
   };
@@ -199,14 +199,8 @@ export class StackedDailyGraph extends PureComponent {
       <StackedDailyGraphSVGContainer
         activeDays={this.props.activeDays}
         bgPrefs={this.props.bgPrefs}
-        smbgData={this.state.currentSmbgData}
-        cbgData={this.state.currentCbgData}
-        bolusData={this.state.currentBolusData}
-        basalData={this.state.currentBasalData}
+        dataByDate={this.props.dataByDate}
         dates={getAllDatesInRange(start, end, this.props.timePrefs)}
-        onSelectDate={this.selectDate()}
-        xScale={this.state.xScale}
-        yScale={this.state.yScale}
       />
     );
   }

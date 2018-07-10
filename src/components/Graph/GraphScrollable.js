@@ -92,6 +92,7 @@ class GraphScrollable extends PureComponent {
       smbgData,
       basalData,
       maxBasalValue,
+      renderNoteEvents,
     } = this.props;
 
     const props = {
@@ -108,6 +109,7 @@ class GraphScrollable extends PureComponent {
       smbgData,
       basalData,
       maxBasalValue,
+      renderNoteEvents,
     };
 
     return props;
@@ -228,6 +230,7 @@ GraphScrollable.propTypes = {
   smbgData: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
   basalData: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
   maxBasalValue: PropTypes.number.isRequired,
+  renderNoteEvents: PropTypes.bool.isRequired,
 };
 
 GraphScrollable.defaultProps = {

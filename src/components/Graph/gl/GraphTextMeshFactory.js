@@ -1,6 +1,6 @@
 // Use require instead of import (for three-bmfont-text) and set global THREE due to: https://github.com/Jam3/three-bmfont-text/issues/13
 const THREE = require("three");
-const { PixelRatio } = require("react-native");
+const { PixelRatio, Platform } = require("react-native");
 const ExpoTHREE = require("expo-three");
 const createGeometry = require("three-bmfont-text");
 
@@ -59,9 +59,34 @@ class GraphTextMeshFactory {
   async loadAssetsAsync() {
     if (!this.assetsAreLoaded) {
       this.bmFont = require("../../../../assets/bmfonts/OpenSans-Regular-56px.json");
-      this.bmFontSpriteSheetTexture = await createTextureAsync({
-        asset: require("../../../../assets/bmfonts/OpenSans-Regular-56px.png"),
-      });
+      // if (Platform.OS !== 'web') {
+      if (Platform.OS === 'web') {
+        // this.bmFontSpriteSheetTexture = await createTextureAsync({
+        //   asset: require("../../../../assets/bmfonts/OpenSans-Regular-56px.png"),
+        // });
+
+
+        // const geometry = createGeometry({
+        //   width: 300,
+        //   align: 'right',
+        //   font: this.bmFont,
+        // });
+
+        // const textureLoader = new THREE.TextureLoader();
+        // textureLoader.load("../../../../assets/bmfonts/OpenSans-Regular-56px.png", (texture) => {
+        //   // we can use a simple ThreeJS material
+        //   const material = new THREE.MeshBasicMaterial({
+        //     map: texture,
+        //     transparent: true,
+        //     color: 0xaaffff,
+        //   });
+
+        //   // now do something with our mesh!
+        //   this.bmFontSpriteSheetTexture = new THREE.Mesh(geometry, material);
+
+        //   console.log(this.bmFontSpriteSheetTexture);
+        // });
+      }
     }
     this.assetsAreLoaded = true;
   }

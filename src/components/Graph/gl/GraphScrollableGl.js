@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { PixelRatio } from "react-native";
+import { PixelRatio, Platform } from "react-native";
 import PropTypes from "prop-types";
 import ExpoTHREE, { THREE } from "expo-three";
 
@@ -79,6 +79,7 @@ class GraphScrollableGl extends PureComponent {
   }
 
   onContextCreate = async gl => {
+    console.log('onContextCreate called with gl', gl);
     const {
       theme,
       graphScalableLayoutInfo: {
@@ -132,16 +133,17 @@ class GraphScrollableGl extends PureComponent {
   renderScene() {
     if (this.scene) {
       // console.log("GraphScrollableGl: renderScene");
-
-      this.graphRenderLayers.forEach(graphRenderLayer => {
-        graphRenderLayer.render({
-          ...this.props,
-          scene: this.scene,
-          contentOffsetX: this.contentOffsetX,
+      if (this.graphRenderLayers) {
+        this.graphRenderLayers.forEach(graphRenderLayer => {
+          graphRenderLayer.render({
+            ...this.props,
+            scene: this.scene,
+            contentOffsetX: this.contentOffsetX,
+          });
         });
-      });
+      }
       this.renderer.render(this.scene, this.camera);
-      this.gl.endFrameEXP();
+      Platform.OS !== 'web' && this.gl.endFrameEXP();
     } else {
       // console.log("GraphScrollableGl: renderScene: No scene, skipped render");
     }
@@ -165,6 +167,7 @@ class GraphScrollableGl extends PureComponent {
         width={width}
         height={height}
         onContextCreate={this.onContextCreate}
+        children={[]}
       />
     );
   }

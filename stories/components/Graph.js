@@ -121,9 +121,7 @@ const selectGraphRenderer = () => {
   return graphRenderer;
 };
 
-
-
-stories.add('real data, mg/dL, four y-axis labels, 1.0 scale', () => (
+stories.add('real data, mg/dL, four y-axis labels, 1.0 scale, no event', () => (
   <StoryContainerComponent behaviors={[]}>
     <Graph
       {...props}
@@ -142,6 +140,7 @@ stories.add('real data, mg/dL, four y-axis labels, 1.0 scale', () => (
       maxBasalValue={graphData3.maxBasalValue}
       scale={1.0}
       graphRenderer={selectGraphRenderer()}
+      renderNoteEvents={false}
     />
   </StoryContainerComponent>
 ));

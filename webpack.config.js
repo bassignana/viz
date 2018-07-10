@@ -81,6 +81,7 @@ module.exports = {
   entry: {
     index: [path.join(__dirname, '/src/index')],
     print: [path.join(__dirname, '/src/modules/print/index')],
+    universal: [path.join(__dirname, '/src/modules/universal/index')],
   },
   output: {
     filename: '[name].js',

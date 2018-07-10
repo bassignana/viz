@@ -32,6 +32,7 @@ class GraphScrollableSvg extends PureComponent {
       },
       cbgData,
       smbgData,
+      renderNoteEvents,
     } = this.props;
 
     // console.log(`GraphScrollableSvg: render`);
@@ -94,7 +95,7 @@ class GraphScrollableSvg extends PureComponent {
         >
           <Svg height={height} width={scaledContentWidth}>
             {xAxisTicksSvgElements}
-            {noteSvgElements}
+            {renderNoteEvents && noteSvgElements}
             {cbgSvgElements}
             {smbgSvgElements}
           </Svg>
@@ -110,6 +111,7 @@ GraphScrollableSvg.propTypes = {
   graphScalableLayoutInfo: PropTypes.object.isRequired,
   cbgData: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
   smbgData: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  renderNoteEvents: PropTypes.bool.isRequired,
 };
 
 export default GraphScrollableSvg;
