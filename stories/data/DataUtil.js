@@ -29,9 +29,10 @@ import {
   button,
 } from '@storybook/addon-knobs';
 
+import { withContexts } from '@storybook/addon-contexts/react';
+
 import moment from 'moment';
 
-import DataUtil from '../../src/utils/DataUtil';
 import Stat from '../../src/components/common/stat/Stat';
 import { commonStats, getStatDefinition } from '../../src/utils/stat';
 import { MGDL_UNITS, MMOLL_UNITS, DEFAULT_BG_BOUNDS } from '../../src/utils/constants';
@@ -39,6 +40,7 @@ import { getOffset } from '../../src/utils/datetime';
 
 const stories = storiesOf('DataUtil', module);
 stories.addDecorator(withKnobs);
+stories.addDecorator(withContexts);
 stories.addParameters({ options: { panelPosition: 'right' } });
 
 const GROUP_DATES = 'DATES';
@@ -61,46 +63,71 @@ const notes = `Run \`window.downloadInputData()\` from the console on a Tidepool
 Save the resulting file to the \`local/\` directory of viz as \`blip-input.json\`,
 and then use this story to generate DataUtil queries outside of Tidepool Web!`;
 
-const Results = ({ results, showData, showStats }) => {
-  const statData = _.get(results, 'data.current.stats');
-  const days = _.get(results, 'data.current.endpoints.daysInRange', 1);
-  const allStats = [];
+class Results extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.dataUtil = props.dataUtil;
+    this.patient = props.patient;
+    this.data = props.data;
+    this.dataSources = props.dataSources || {};
+    this.currentData = _.get(this.dataSources, this.data, this.dataSources.default);
+  }
 
-  const wrapperStyles = {
-    padding: '20px 0 0',
-  };
+  componentWillMount() {
+    this.dataUtil.addData(this.currentData, this.patient.id);
+  }
 
-  const statStyles = {
-    margin: '0 0 10px',
-  };
+  componentWillReceiveProps(nextProps) {
+    if (this.props.data !== nextProps.data) {
+      this.currentData = _.get(this.dataSources, this.data, this.dataSources.default);
+      this.dataUtil.addData(this.currentData, this.patient.id);
+    }
+  }
 
-  const renderStats = (stats, bgPrefs) => (_.map(stats, stat => (
-    <div style={statStyles} id={`Stat--${stat.id}`} key={stat.id}>
-      <Stat bgPrefs={bgPrefs} {...stat} />
-    </div>
-  )));
+  render() {
+    const { results, showData, showStats } = this.props;
+    const statData = _.get(results, 'data.current.stats');
+    const days = _.get(results, 'data.current.endpoints.daysInRange', 1);
+    const allStats = [];
 
-  _.each(_.keys(statData), stat => {
-    allStats.push(getStatDefinition(statData[stat], stat, {
-      days,
-      bgPrefs: results.bgPrefs,
-      bgSource: _.get(results, 'metaData.bgSources.current'),
-    }));
-  });
+    const wrapperStyles = {
+      padding: '20px 0 0',
+    };
 
-  return (
-    <div>
-      {showStats && <div style={wrapperStyles}>{renderStats(allStats, results.bgPrefs)}</div>}
-      {showData && <pre>{JSON.stringify(results, null, 2)}</pre>}
-    </div>
-  );
-};
+    const statStyles = {
+      margin: '0 0 10px',
+    };
 
-const patientId = 'abc123';
-const dataUtil = new DataUtil();
-dataUtil.addData(data, patientId);
+    const renderStats = (stats, bgPrefs) => (_.map(stats, stat => (
+      <div style={statStyles} id={`Stat--${stat.id}`} key={stat.id}>
+        <Stat bgPrefs={bgPrefs} {...stat} />
+      </div>
+    )));
 
-stories.add('Query Generator', () => {
+    _.each(_.keys(statData), stat => {
+      allStats.push(getStatDefinition(statData[stat], stat, {
+        days,
+        bgPrefs: results.bgPrefs,
+        bgSource: _.get(results, 'metaData.bgSources.current'),
+      }));
+    });
+
+    return (
+      <div>
+        {showStats && <div style={wrapperStyles}>{renderStats(allStats, results.bgPrefs)}</div>}
+        {showData && <pre>{JSON.stringify(results, null, 2)}</pre>}
+      </div>
+    );
+  }
+}
+
+// const patientId = 'abc123';
+// const dataUtil = new DataUtil();
+// dataUtil.addData(data, patientId);
+
+stories.add('Query Generator', (props) => {
+  const { dataUtil, dataSources } = props;
+
   const endMoment = moment.utc(data[1].time).startOf('day').add(1, 'd');
 
   const getEndMoment = () => {
@@ -456,7 +483,7 @@ stories.add('Query Generator', () => {
     endpoints[i] = moment.utc(endpoints[i]).add(offset, 'minutes').toISOString();
   });
 
-  const defaultQuery = {
+  const defaultQuery = () => ({
     endpoints,
     activeDays: getActiveDays(),
     types: getTypes(),
@@ -468,20 +495,24 @@ stories.add('Query Generator', () => {
     stats: getStats(),
     aggregationsByDate: getAggregationsByDate(),
     metaData: getMetaData(),
-  };
+    fillData: getFillData() ? { adjustForDSTChanges: adjustForDSTChanges() } : undefined,
+  });
 
-  if (getFillData()) {
-    defaultQuery.fillData = { adjustForDSTChanges: adjustForDSTChanges() };
-  }
+  // if (getFillData()) {
+  //   defaultQuery.fillData = { adjustForDSTChanges: adjustForDSTChanges() };
+  // }
 
   const showData = () => boolean('Render Data', true, GROUP_RESULTS);
   const showStats = () => boolean('Render Stats', true, GROUP_RESULTS);
-  const query = () => object('Query', defaultQuery, GROUP_RESULTS);
+  const query = () => object('Query', defaultQuery(), GROUP_RESULTS);
+  const results = () => dataUtil.query(query());
 
   return <Results
     showStats={showStats()}
     showData={showData()}
-    results={dataUtil.query(query())}
+    results={results()}
+    dataSources={_.cloneDeep(dataSources)}
+    dataUtil={dataUtil}
   />;
 }, { notes });
 
@@ -499,10 +530,9 @@ const message = {
   },
 };
 
-const messageDataUtil = new DataUtil();
-messageDataUtil.addData([_.cloneDeep(message)], patientId);
+stories.add('Update Message', (props) => {
+  const { dataUtil } = props;
 
-stories.add('Update Message', () => {
   const defaultQuery = {
     endpoints: [
       '2018-03-27T05:00:00.000Z',
@@ -517,10 +547,14 @@ stories.add('Update Message', () => {
 
   const query = () => object('Query', defaultQuery, GROUP_RESULTS);
   const datum = () => object('Message', _.cloneDeep(message), GROUP_RESULTS);
-  const updateButton = () => button('Update Message', () => messageDataUtil.updateDatum(datum()), GROUP_RESULTS);
+  const updateButton = () => button('Update Message', () => dataUtil.updateDatum(datum()), GROUP_RESULTS);
+
   return <Results
     showData
-    results={messageDataUtil.query(query())}
+    data={'default'}
+    dataSources={{ default: [message] }}
+    dataUtil={dataUtil}
+    results={dataUtil.query(query())}
     datum={datum()}
     button={updateButton()}
   />;
