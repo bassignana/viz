@@ -16,12 +16,15 @@
  */
 
 .background {
-  stroke: var(--bkgrnd-lines);
+  /* stroke: var(--bkgrnd-lines); */
+  stroke: #c9c9d2;
   stroke-width: 1px;
-  fill: var(--bkgrnd);
+  /*fill: var(--bkgrnd);*/
+  fill: #c9c9d2;
 }
 
 .threeHrLine {
-  stroke: var(--bkgrnd-lines);
-  stroke-width: 1px;
+  /* stroke: var(--bkgrnd-lines); */
+  stroke: #c9c9d2;
+stroke-width: 1px;
 }
